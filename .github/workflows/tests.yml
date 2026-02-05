@@ -47,8 +47,8 @@ jobs:
         if: always()  # Всегда выполняем, независимо от успеха или неудачи предыдущих шагов
         continue-on-error: true  # Если здесь возникнет ошибка, workflow всё равно продолжит выполнение
         with:
-          ref: gh-pages  # Указываем ветку gh-pages для получения отчётов
-            path: gh-pages  # Указываем путь для сохранения отчётов
+          ref: gh-pages
+            path: gh-pages
 
       - name: Install Allure CLI
         run: |
