@@ -1,9 +1,6 @@
 # Имя вашего workflow, которое будет отображаться в интерфейсе GitHub Actions
 name: UI tests
 
-permissions:
-  contents: write
-
 # Указываем, когда будет запускаться данный workflow
 on:
   push:
@@ -27,7 +24,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4  # Используем GitHub Action для установки Python
         with:
-          python-version: '3.10'  # Устанавливаем версию Python 3.11 (можно заменить на другую версию)
+          python-version: '3.11'  # Устанавливаем версию Python 3.11 (можно заменить на другую версию)
 
       # 3. Шаг для установки всех зависимостей проекта
       - name: Install dependencies
@@ -47,21 +44,21 @@ jobs:
         if: always()  # Всегда выполняем, независимо от успеха или неудачи предыдущих шагов
         continue-on-error: true  # Если здесь возникнет ошибка, workflow всё равно продолжит выполнение
         with:
-          ref: gh-pages
-          path: gh-pages
+          ref: gh-pages  # Указываем ветку gh-pages для получения отчётов
+          path: gh-pages  # Указываем путь для сохранения отчётов
 
       - name: Install Allure CLI
-        run: |
-          wget https://github.com/allure-framework/allure2/releases/download/2.24.0/allure-2.24.0.tgz
-          tar -zxvf allure-2.24.0.tgz
-          sudo mv allure-2.24.0 /usr/bin/allure
-          chmod +x /usr/bin/allure/bin/allure
+          run: |
+            wget https://github.com/allure-framework/allure2/releases/download/2.24.0/allure-2.24.0.tgz
+            tar -zxvf allure-2.24.0.tgz
+            sudo mv allure-2.24.0 /usr/bin/allure
+            chmod +x /usr/bin/allure/bin/allure
 
-      - name: Generate Report
-        run: /usr/bin/allure/bin/allure generate allure-results --clean -o allure-report
+            - name: Generate Report
+              run: /usr/bin/allure/bin/allure generate allure-results --clean -o allure-report
 
-      - name: Deploy to GH Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: allure-report
+            - name: Deploy to GH Pages
+              uses: peaceiris/actions-gh-pages@v3
+              with:
+                github_token: ${{ secrets.GITHUB_TOKEN }}
+                publish_dir: allure-report
