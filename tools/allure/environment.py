@@ -12,5 +12,5 @@ def create_allure_environment_file():
 
     with open(setting.allure_results_dir.joinpath('environment.properties'), 'w+') as file:
         file.write(properties)
-        file.write(sys.version)
+        file.write(f'{sys.version}')
         file.write(f'{platform.system()}, {platform.release()}')
