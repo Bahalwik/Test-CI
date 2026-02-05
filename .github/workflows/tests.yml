@@ -3,8 +3,6 @@ name: UI tests
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 # Указываем, когда будет запускаться данный workflow
 on:
